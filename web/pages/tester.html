@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marquee Review Cards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            background-color: #fafafa;
+            color: #171717;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-slbm {
+            background-color: #0a0a0a;
+            color: #ededed;
+        }
+
+        .container-slbm {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .title-slbm {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .marquee-container-slbm {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .marquee-wrapper-slbm {
+            display: flex;
+            width: max-content;
+            animation: marquee-scroll-slbm var(--duration, 20s) linear infinite;
+        }
+
+        .marquee-wrapper-slbm.pause-on-hover-slbm:hover {
+            animation-play-state: paused;
+        }
+
+        .marquee-wrapper-slbm.reverse-slbm {
+            animation-direction: reverse;
+        }
+
+        .review-card-slbm {
+            position: relative;
+            height: 100%;
+            width: 256px;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 0 0.5rem;
+            flex-shrink: 0;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.01);
+            transition: background-color 0.3s, border-color 0.3s;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .review-card-slbm:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-slbm .review-card-slbm {
+            border-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-slbm .review-card-slbm:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .review-header-slbm {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .avatar-slbm {
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+        }
+
+        .user-info-slbm {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name-slbm {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .user-handle-slbm {
+            font-size: 0.75rem;
+            font-weight: 500;
+            opacity: 0.4;
+        }
+
+        .review-content-slbm {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .gradient-overlay-slbm {
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 25%;
+            z-index: 2;
+        }
+
+        .gradient-left-slbm {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-color, #fafafa), transparent);
+        }
+
+        .gradient-right-slbm {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-color, #fafafa), transparent);
+        }
+
+        body.dark-slbm .gradient-left-slbm {
+            background: linear-gradient(to right, var(--bg-color-dark, #0a0a0a), transparent);
+        }
+
+        body.dark-slbm .gradient-right-slbm {
+            background: linear-gradient(to left, var(--bg-color-dark, #0a0a0a), transparent);
+        }
+
+        .theme-toggle-slbm {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .theme-toggle-slbm:hover {
+            opacity: 1;
+        }
+
+        @keyframes marquee-scroll-slbm {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title-slbm {
+                font-size: 2rem;
+            }
+            
+            .review-card-slbm {
+                width: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-slbm">
+        <h1 class="title-slbm">Customer Reviews</h1>
+        
+        <div class="marquee-demo-slbm">
+            <div class="marquee-container-slbm">
+                <div class="marquee-wrapper-slbm pause-on-hover-slbm" style="--duration: 20s;">
+                    <!-- First row of reviews will be inserted by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="marquee-container-slbm">
+                <div class="marquee-wrapper-slbm pause-on-hover-slbm reverse-slbm" style="--duration: 20s;">
+                    <!-- Second row of reviews will be inserted by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="gradient-overlay-slbm gradient-left-slbm"></div>
+            <div class="gradient-overlay-slbm gradient-right-slbm"></div>
+        </div>
+    </div>
+    
+    <button class="theme-toggle-slbm" id="themeToggle">🌙</button>
+    
+    <script>
+        // Review data
+        const reviews = [
+            {
+                name: "James",
+                username: "@james",
+                body: "I'm at a loss for words. This is amazing. I love it.",
+                img: "../../images/Screenshot (6).png"
+            },
+            {
+                name: "Sarah",
+                username: "@sarah",
+                body: "This product changed my life. Highly recommend!",
+                img: "../../images/Life picture.jpg"
+            },
+            {
+                name: "Michael",
+                username: "@michael",
+                body: "Excellent quality and fast shipping. Will buy again.",
+                img: "../../images/Give a hand!.jpg"
+            },
+            {
+                name: "Emily",
+                username: "@emily",
+                body: "Beautiful design and very functional. Perfect!",
+                img: "../../images/UNI5528160.JPG.webp"
+            },
+            {
+                name: "David",
+                username: "@david",
+                body: "Exceeded my expectations in every way possible.",
+                img: "../../images/The Worst Mistake You Don’t Know You’re Making.jpg"
+            }
+        ];
+
+        // Create two rows of reviews
+        const firstRow = reviews.slice(0, 3);
+        const secondRow = reviews.slice(2, 5);
+
+        // Function to create a review card
+        function createReviewCard(review) {
+            return `
+                <div class="review-card-slbm" style="background-image: url('${review.img}');">
+                    <div class="review-header-slbm">
+                        <img class="avatar-slbm" src="${review.img}" alt="${review.name}" width="32" height="32">
+                        <div class="user-info-slbm">
+                            <div class="user-name-slbm">${review.name}</div>
+                            <div class="user-handle-slbm">${review.username}</div>
+                        </div>
+                    </div>
+                    <blockquote class="review-content-slbm">${review.body}</blockquote>
+                </div>
+            `;
+        }
+
+        // Render the marquees
+        function renderMarquees() {
+            const firstRowContainer = document.querySelector('.marquee-wrapper-slbm:not(.reverse-slbm)');
+            const secondRowContainer = document.querySelector('.marquee-wrapper-slbm.reverse-slbm');
+            
+            firstRowContainer.innerHTML = firstRow.map(review => createReviewCard(review)).join('');
+            secondRowContainer.innerHTML = secondRow.map(review => createReviewCard(review)).join('');
+            
+            // Duplicate content for seamless looping
+            firstRowContainer.innerHTML += firstRow.map(review => createReviewCard(review)).join('');
+            secondRowContainer.innerHTML += secondRow.map(review => createReviewCard(review)).join('');
+        }
+
+        // Theme toggle functionality
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            // Check for saved theme preference or respect OS preference
+            if (localStorage.getItem('theme') === 'dark' || 
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                body.classList.add('dark-slbm');
+                themeToggle.textContent = '☀️';
+            } else {
+                themeToggle.textContent = '🌙';
+            }
+            
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-slbm');
+                if (body.classList.contains('dark-slbm')) {
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.textContent = '☀️';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.textContent = '🌙';
+                }
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMarquees();
+            setupThemeToggle();
+            
+            // Update gradient colors based on theme
+            const updateGradientColors = () => {
+                const isDark = document.body.classList.contains('dark-slbm');
+                document.documentElement.style.setProperty('--bg-color', isDark ? '#0a0a0a' : '#fafafa');
+            };
+            
+            // Watch for theme changes
+            const observer = new MutationObserver(updateGradientColors);
+            observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+            
+            // Initial update
+            updateGradientColors();
+        });
+    </script>
+</body>
+</html>
